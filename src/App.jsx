@@ -21,10 +21,10 @@ const THEMES = [
 const NAV_LINKS = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'industries', label: 'Industries' },
   { id: 'career', label: 'Career' },
   { id: 'achievements', label: 'Achievements' },
   { id: 'skills', label: 'Skills' },
-  { id: 'testimonials', label: 'Testimonials' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -46,8 +46,34 @@ const TIMELINE = [
   { year: '2026', role: 'Sales Manager', company: 'Enzolt Energy', note: 'Leading channel strategy in the energy & EV space across South India.', current: true },
 ];
 
+/* Industries worked across — each maps to a distinct chapter of the career */
+const INDUSTRIES = [
+  {
+    slug: 'printing-imaging',
+    icon: 'printer',
+    title: 'Printing & Imaging Industry',
+    years: '2004 — 2022 · 18+ Yrs',
+    note: 'Started in photo-lab technical support and grew into regional channel leadership at Fujifilm India, mastering B2B distribution in a mature, highly competitive category.',
+  },
+  {
+    slug: 'energy-ev',
+    icon: 'energy',
+    title: 'Energy & EV Sector',
+    years: '2026 — Present',
+    note: 'Made a deliberate pivot into India\u2019s clean-energy transition, now building Enzolt Energy\u2019s dealer-distributor network from the ground up.',
+  },
+  {
+    slug: 'regional-sales-management',
+    icon: 'compass',
+    title: 'Regional Sales Management',
+    years: '2017 — 2022 · 5+ Yrs',
+    note: 'Owned the South India channel P&L as Regional Sales Manager, sustaining 100%+ quota delivery across the territory year after year.',
+  },
+];
+
 const CAREER = [
   {
+    slug: 'enzolt-energy',
     company: 'Enzolt Energy Pvt. Ltd.',
     initials: 'EE',
     role: 'Sales Manager',
@@ -62,6 +88,7 @@ const CAREER = [
     tech: ['Channel Strategy', 'B2B & B2C', 'Market Mapping', 'MIS Reporting'],
   },
   {
+    slug: 'fujifilm-regional-sales-manager',
     company: 'Fujifilm India Pvt. Ltd.',
     initials: 'FJ',
     role: 'Regional Sales Manager',
@@ -76,6 +103,7 @@ const CAREER = [
     tech: ['Territory Strategy', 'Key Accounts', 'Budget Ownership', 'Negotiation'],
   },
   {
+    slug: 'fujifilm-head-sales-support',
     company: 'Fujifilm India Pvt. Ltd.',
     initials: 'FJ',
     role: 'Head — Sales Support (Deputy Manager)',
@@ -90,6 +118,7 @@ const CAREER = [
     tech: ['SAP SD', 'Credit Control', 'Channel Onboarding', 'Stock Planning'],
   },
   {
+    slug: 'fujifilm-sales-coordinator',
     company: 'Fujifilm India Pvt. Ltd.',
     initials: 'FJ',
     role: 'Sales Coordinator — Senior Executive',
@@ -173,12 +202,6 @@ const DIFFERENTIATORS = [
   { title: 'Problem Solving', note: 'Resolves distributor & customer escalations before they become churn.' },
 ];
 
-const TESTIMONIALS = [
-  { quote: 'Nanda consistently exceeded expectations by combining strategic thinking with exceptional execution.', name: 'Regional Director', title: 'Fujifilm India' },
-  { quote: 'He transformed dealer engagement and consistently achieved sales targets, year after year.', name: 'Senior Business Head', title: 'Fujifilm India' },
-  { quote: 'One of the strongest channel development professionals I have worked with — decisive and dependable.', name: 'Sales Director', title: 'Energy Sector' },
-];
-
 const CONTACT_INFO = [
   { label: 'Phone', value: '+91 97910 67951', href: 'tel:+919791067951', icon: 'phone' },
   { label: 'Email', value: 'erpnanda@gmail.com', href: 'mailto:erpnanda@gmail.com', icon: 'mail' },
@@ -202,6 +225,8 @@ const Icon = ({ name, size = 20 }) => {
     case 'briefcase': return <svg {...p}><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>;
     case 'compass': return <svg {...p}><circle cx="12" cy="12" r="10" /><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z" /></svg>;
     case 'chip': return <svg {...p}><rect x="6" y="6" width="12" height="12" rx="1" /><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2" /></svg>;
+    case 'printer': return <svg {...p}><path d="M6 9V2h12v7" /><rect x="4" y="9" width="16" height="8" rx="1" /><path d="M6 17h12v5H6z" /></svg>;
+    case 'energy': return <svg {...p}><path d="M13 2 4 14h6l-1 8 9-12h-6z" /></svg>;
     case 'menu': return <svg {...p}><path d="M3 12h18M3 6h18M3 18h18" /></svg>;
     case 'close': return <svg {...p}><path d="M18 6 6 18M6 6l12 12" /></svg>;
     case 'download': return <svg {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 10l5 5 5-5M12 15V3" /></svg>;
@@ -326,12 +351,18 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [themePickerOpen, setThemePickerOpen] = useState(false);
+  const [activeCareerSlug, setActiveCareerSlug] = useState(null);
   const glowRef = useRef(null);
   const heroRef = useRef(null);
 
   const navIds = useMemo(() => NAV_LINKS.map((n) => n.id), []);
   const active = useActiveSection(navIds);
   useReveal();
+
+  const activeCareer = useMemo(
+    () => CAREER.find((c) => c.slug === activeCareerSlug) || null,
+    [activeCareerSlug]
+  );
 
   useEffect(() => {
     const stored = window.localStorage ? localStorage.getItem('nk-theme') : null;
@@ -359,6 +390,53 @@ export default function App() {
     window.addEventListener('mousemove', onMouseMove);
     return () => window.removeEventListener('mousemove', onMouseMove);
   }, [onMouseMove]);
+
+  /* --- Career detail "routing" ---------------------------------
+     Clicking a career card pushes a #career-<slug> hash onto the
+     browser history, so the detail view opens/closes the same way
+     a real route would — including working Back/Forward buttons —
+     without pulling in a router dependency. */
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash.startsWith('career-')) {
+        const slug = hash.replace('career-', '');
+        if (CAREER.some((c) => c.slug === slug)) {
+          setActiveCareerSlug(slug);
+          return;
+        }
+      }
+      setActiveCareerSlug(null);
+    };
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = activeCareerSlug ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [activeCareerSlug]);
+
+  const closeCareer = useCallback(() => {
+    if (window.location.hash) {
+      window.history.back();
+    } else {
+      setActiveCareerSlug(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape' && activeCareerSlug) closeCareer();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeCareerSlug, closeCareer]);
+
+  const openCareer = (slug) => {
+    window.location.hash = `career-${slug}`;
+  };
 
   const scrollTo = (id) => {
     setMenuOpen(false);
@@ -556,16 +634,46 @@ export default function App() {
           </div>
         </section>
 
+        {/* INDUSTRY EXPERIENCE */}
+        <section id="industries" className="section industries">
+          <div className="section-inner">
+            <p className="eyebrow reveal fade-up">Industry Experience</p>
+            <h2 className="section-title reveal fade-up">Industries I've Worked In</h2>
+            <p className="section-lead reveal fade-up">
+              Two distinct categories, one transferable playbook: build the channel, back the dealer, own the number.
+            </p>
+
+            <div className="industries-grid">
+              {INDUSTRIES.map((ind) => (
+                <div className="industry-card glass reveal fade-up" key={ind.slug}>
+                  <span className="industry-icon"><Icon name={ind.icon} size={22} /></span>
+                  <span className="industry-years">{ind.years}</span>
+                  <h3>{ind.title}</h3>
+                  <p>{ind.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CAREER HIGHLIGHTS */}
         <section id="career" className="section career">
           <div className="section-inner">
             <p className="eyebrow reveal fade-up">Career</p>
             <h2 className="section-title reveal fade-up">Career Highlights</h2>
-            <p className="section-lead reveal fade-up">Two decades of channel leadership across two industries, one operating philosophy.</p>
+            <p className="section-lead reveal fade-up">Two decades of channel leadership across two industries, one operating philosophy. Tap a role for the full story.</p>
 
             <div className="career-grid">
               {CAREER.map((c) => (
-                <article className="career-card glass tilt reveal fade-up" key={c.role}>
+                <article
+                  className="career-card glass tilt clickable reveal fade-up"
+                  key={c.slug}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => openCareer(c.slug)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCareer(c.slug); } }}
+                  aria-label={`View details for ${c.role} at ${c.company}`}
+                >
                   <div className="career-card-head">
                     <div className="company-logo">{c.initials}</div>
                     <div>
@@ -584,6 +692,7 @@ export default function App() {
                   <div className="career-tags">
                     {c.tech.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
+                  <span className="career-card-hint">View full role <Icon name="arrow" size={14} /></span>
                 </article>
               ))}
             </div>
@@ -707,26 +816,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
-        <section id="testimonials" className="section testimonials">
-          <div className="section-inner">
-            <p className="eyebrow reveal fade-up">Testimonials</p>
-            <h2 className="section-title reveal fade-up">What Colleagues Say</h2>
-            <div className="testimonial-grid">
-              {TESTIMONIALS.map((t) => (
-                <figure className="testimonial-card glass reveal fade-up" key={t.name}>
-                  <span className="quote-mark" aria-hidden="true">&ldquo;</span>
-                  <blockquote>{t.quote}</blockquote>
-                  <figcaption>
-                    <strong>{t.name}</strong>
-                    <span>{t.title}</span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* CONTACT */}
         <section id="contact" className="section contact">
           <div className="section-inner">
@@ -767,6 +856,39 @@ export default function App() {
           <p className="footer-copy">© {new Date().getFullYear()} R. Nanda Kumar. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* CAREER DETAIL — opens via a #career-<slug> hash, so Back/Forward
+          and the Esc key close it the same way a real route would */}
+      {activeCareer && (
+        <div className="career-detail-overlay" role="dialog" aria-modal="true" aria-label={`${activeCareer.role} at ${activeCareer.company}`}>
+          <div className="career-detail-backdrop" onClick={closeCareer} />
+          <div className="career-detail-modal glass">
+            <button className="career-detail-close" onClick={closeCareer} aria-label="Close">
+              <Icon name="close" size={20} />
+            </button>
+            <div className="career-detail-head">
+              <div className="company-logo career-detail-logo">{activeCareer.initials}</div>
+              <div>
+                <h3>{activeCareer.role}</h3>
+                <p className="career-company">{activeCareer.company}</p>
+              </div>
+            </div>
+            <div className="career-meta career-detail-meta">
+              <span>{activeCareer.years}</span>
+              <span>{activeCareer.location}</span>
+            </div>
+            <p className="career-detail-summary">{activeCareer.summary}</p>
+            <h4 className="career-detail-subhead">Key Achievements</h4>
+            <ul className="career-achievements career-detail-achievements">
+              {activeCareer.achievements.map((a) => <li key={a}>{a}</li>)}
+            </ul>
+            <h4 className="career-detail-subhead">Focus Areas</h4>
+            <div className="career-tags">
+              {activeCareer.tech.map((t) => <span key={t} className="tag">{t}</span>)}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
