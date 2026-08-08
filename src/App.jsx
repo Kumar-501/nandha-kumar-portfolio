@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import './App.css';
 import logoImg from './assets/logo.png';
+import profileImg from './assets/nandaprofile.png';
 
 /* Resume file served from the /public folder — Vite/CRA expose everything in
    /public at the site root, so this resolves to /Nanda_Kumar_Executive_Resume.docx */
@@ -23,8 +24,8 @@ const NAV_LINKS = [
   { id: 'about', label: 'About' },
   { id: 'industries', label: 'Industries' },
   { id: 'career', label: 'Career' },
-  { id: 'achievements', label: 'Achievements' },
   { id: 'skills', label: 'Skills' },
+  { id: 'achievements', label: 'Achievements' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -37,12 +38,12 @@ const HERO_STATS = [
 
 const TIMELINE = [
   { year: '2004', role: 'Technical Engineer', company: 'Digital Photo Supply', note: 'Installed and maintained minilab equipment; ran billing & inventory systems.' },
-  { year: '2007', role: 'Sales & Service Engineer', company: 'Em Sons Imaging Pvt. Ltd.', note: 'Moved into client-facing sales, resolving 90% of issues within SLA.' },
-  { year: '2009', role: 'Sales Coordinator', company: 'Fujifilm India', note: 'Drove product promotions; lifted customer inquiries by 20%.' },
-  { year: '2011', role: 'Senior Executive', company: 'Fujifilm India', note: 'Delivered SAP-backed MIS analytics, improving quarterly sales by 10%.' },
-  { year: '2013', role: 'Assistant Manager', company: 'Fujifilm India', note: 'Coordinated PAN-India zones, aligning planning for 100% achievement.' },
-  { year: '2015', role: 'Deputy Manager', company: 'Fujifilm India', note: 'Headed Sales Support for 50+ distributors; cut receivables by 15%.' },
-  { year: '2017', role: 'Regional Sales Manager', company: 'Fujifilm India', note: 'Owned South India channel network and 100%+ quota delivery for 5+ years.' },
+  { year: '2007', role: 'Sales & Service Engineer', company: 'EmSons Imaging Pvt. Ltd.', note: 'Moved into client-facing sales, resolving 90% of issues within SLA.' },
+  { year: '2009', role: 'Sales Coordinator', company: 'Fujifilm India Private limited', note: 'Drove product promotions; lifted customer inquiries by 20%.' },
+  { year: '2011', role: 'Senior Executive', company: 'Fujifilm India Private limited', note: 'Delivered SAP-backed MIS analytics, improving quarterly sales by 10%.' },
+  { year: '2013', role: 'Assistant Manager', company: 'Fujifilm India Private limited', note: 'Coordinated PAN-India zones, aligning planning for 100% achievement.' },
+  { year: '2015', role: 'Deputy Manager', company: 'Fujifilm India Private limited', note: 'Headed Sales Support for 50+ distributors; cut receivables by 15%.' },
+  { year: '2017', role: 'Regional Sales Manager', company: 'Fujifilm India Private limited', note: 'Owned South India channel network and 100%+ quota delivery for 5+ years.' },
   { year: '2026', role: 'Sales Manager', company: 'Enzolt Energy', note: 'Leading channel strategy in the energy & EV space across South India.', current: true },
 ];
 
@@ -60,14 +61,7 @@ const INDUSTRIES = [
     icon: 'energy',
     title: 'Energy & EV Sector',
     years: '2026 — Present',
-    note: 'Made a deliberate pivot into India\u2019s clean-energy transition, now building Enzolt Energy\u2019s dealer-distributor network from the ground up.',
-  },
-  {
-    slug: 'regional-sales-management',
-    icon: 'compass',
-    title: 'Regional Sales Management',
-    years: '2017 — 2022 · 5+ Yrs',
-    note: 'Owned the South India channel P&L as Regional Sales Manager, sustaining 100%+ quota delivery across the territory year after year.',
+    note: 'Made a deliberate pivot into India’s clean-energy transition, now building Enzolt Energy’s dealer-distributor network from the ground up.',
   },
 ];
 
@@ -79,7 +73,7 @@ const CAREER = [
     role: 'Sales Manager',
     years: 'May 2026 — Present',
     location: 'Chennai',
-    summary: 'Leading channel sales strategy for solar and energy solutions, building a fresh dealer-distributor network from the ground up in India\u2019s clean-energy transition.',
+    summary: 'Leading channel sales strategy for solar and energy solutions, building a fresh dealer-distributor network from the ground up in India’s clean-energy transition.',
     achievements: [
       'Appointed and activated a multi-city dealer network within the first month',
       'Owning annual targets end-to-end: pipeline, funnel, corrective action',
@@ -94,7 +88,7 @@ const CAREER = [
     role: 'Regional Sales Manager',
     years: 'Apr 2017 — Dec 2022',
     location: 'Chennai',
-    summary: 'Owned South India\u2019s channel P&L — from distributor relationships to territory strategy — sustaining 100%+ quota delivery across the region.',
+    summary: 'Owned South India’s channel P&L — from distributor relationships to territory strategy — sustaining 100%+ quota delivery across the region.',
     achievements: [
       'Consistently converted prospects into long-term, high-value accounts',
       'Ran store audits & sales training to lift dealer sell-through',
@@ -132,6 +126,36 @@ const CAREER = [
     ],
     tech: ['SAP MIS', 'Pricing & Credit Notes', 'Escalation Management'],
   },
+  {
+    slug: 'em-sons-imaging',
+    company: 'Em Sons Imaging Pvt. Ltd.',
+    initials: 'ES',
+    role: 'Sales & Service Engineer',
+    years: 'Apr 2007 — Mar 2009',
+    location: 'Chennai',
+    summary: 'Transitioned into client-facing technical sales and service operations, delivering equipment demonstrations, SLA compliance, and customer relationship management.',
+    achievements: [
+      'Resolved 90% of customer technical issues within SLA timelines',
+      'Handled client account onboarding and technical support across South region',
+      'Built early foundations in technical selling and direct account ownership',
+    ],
+    tech: ['Technical Sales', 'SLA Resolution', 'Client Support', 'Account Management'],
+  },
+  {
+    slug: 'digital-photo-supply',
+    company: 'Digital Photo Supply',
+    initials: 'DP',
+    role: 'Technical Engineer',
+    years: 'Jun 2004 — Mar 2007',
+    location: 'Chennai',
+    summary: 'Foundational technical role managing installation, maintenance, technical analysis, and troubleshooting for minilab photofinishing machinery.',
+    achievements: [
+      'Installed, serviced, and maintained minilab hardware across client accounts',
+      'Managed daily billing systems and inventory management with high precision',
+      'Established core technical diagnostics and equipment maintenance skillset',
+    ],
+    tech: ['Technical Analysis', 'Equipment Maintenance', 'Billing Systems', 'Diagnostics'],
+  },
 ];
 
 const METRICS = [
@@ -146,7 +170,7 @@ const METRICS = [
 const EXPERTISE = [
   'Field Sales', 'Business Development', 'Dealer Appointment', 'Channel Expansion',
   'Territory Planning', 'Key Account Management', 'B2B Sales', 'Retail Sales',
-  'Distribution Strategy', 'Sales Leadership', 'SAP', 'CRM',
+  'Distribution Strategy', 'Sales Leadership', 'Technical Analysis', 'SAP', 'CRM',
   'Advanced Excel', 'Negotiation', 'Forecasting', 'Relationship Building', 'Market Expansion',
 ];
 
@@ -178,7 +202,7 @@ const SKILL_GROUPS = [
       { name: 'SAP (SD & Basis)', value: 90 },
       { name: 'CRM Systems', value: 92 },
       { name: 'Advanced Excel', value: 94 },
-      { name: 'MIS Reporting', value: 93 },
+      { name: 'Technical Analysis & MIS', value: 93 },
     ],
   },
 ];
@@ -207,7 +231,7 @@ const CONTACT_INFO = [
   { label: 'Email', value: 'erpnanda@gmail.com', href: 'mailto:erpnanda@gmail.com', icon: 'mail' },
   { label: 'LinkedIn', value: 'nanda-kumar-ababbb81', href: 'https://linkedin.com/in/nanda-kumar-ababbb81', icon: 'linkedin' },
   { label: 'Location', value: 'Chennai, Tamil Nadu', href: null, icon: 'pin' },
-  { label: 'Availability', value: 'Immediately Available', href: null, icon: 'clock' },
+  { label: 'Availability', value: 'Available in 30 Days', href: null, icon: 'clock' },
 ];
 
 /* ============================================================
@@ -351,18 +375,12 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [themePickerOpen, setThemePickerOpen] = useState(false);
-  const [activeCareerSlug, setActiveCareerSlug] = useState(null);
   const glowRef = useRef(null);
   const heroRef = useRef(null);
 
   const navIds = useMemo(() => NAV_LINKS.map((n) => n.id), []);
   const active = useActiveSection(navIds);
   useReveal();
-
-  const activeCareer = useMemo(
-    () => CAREER.find((c) => c.slug === activeCareerSlug) || null,
-    [activeCareerSlug]
-  );
 
   useEffect(() => {
     const stored = window.localStorage ? localStorage.getItem('nk-theme') : null;
@@ -390,53 +408,6 @@ export default function App() {
     window.addEventListener('mousemove', onMouseMove);
     return () => window.removeEventListener('mousemove', onMouseMove);
   }, [onMouseMove]);
-
-  /* --- Career detail "routing" ---------------------------------
-     Clicking a career card pushes a #career-<slug> hash onto the
-     browser history, so the detail view opens/closes the same way
-     a real route would — including working Back/Forward buttons —
-     without pulling in a router dependency. */
-  useEffect(() => {
-    const syncFromHash = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash.startsWith('career-')) {
-        const slug = hash.replace('career-', '');
-        if (CAREER.some((c) => c.slug === slug)) {
-          setActiveCareerSlug(slug);
-          return;
-        }
-      }
-      setActiveCareerSlug(null);
-    };
-    syncFromHash();
-    window.addEventListener('hashchange', syncFromHash);
-    return () => window.removeEventListener('hashchange', syncFromHash);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = activeCareerSlug ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [activeCareerSlug]);
-
-  const closeCareer = useCallback(() => {
-    if (window.location.hash) {
-      window.history.back();
-    } else {
-      setActiveCareerSlug(null);
-    }
-  }, []);
-
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape' && activeCareerSlug) closeCareer();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [activeCareerSlug, closeCareer]);
-
-  const openCareer = (slug) => {
-    window.location.hash = `career-${slug}`;
-  };
 
   const scrollTo = (id) => {
     setMenuOpen(false);
@@ -551,12 +522,9 @@ export default function App() {
               </h1>
               <p className="hero-subheading">Sales Manager · Channel Development · Business Growth Strategist</p>
               <p className="hero-summary">
-                A senior sales &amp; channel leader with <strong>19+ years</strong> of B2B techno-sales
-                experience — including <strong>13+ years</strong> inside a leading Japanese MNC — building
-                dealer-distributor networks that scale. In 2026, made a deliberate move into the
-                <strong> energy &amp; EV</strong> sector to help lead India's clean-energy transition, now
-                driving channel strategy, network expansion and field sales leadership at Enzolt Energy.
+                A Senior sales &amp; channel leader with <strong>19+ years</strong> of B2B techno-sales experience in the <strong>Image Printing Industry</strong> — including <strong>13+ years</strong> inside a leading Japanese MNC — building dealer-distributor networks that scale. In 2026, made a deliberate move into the <strong>Energy &amp; EV</strong> sector to help lead India's clean-energy transition, now driving <strong>channel strategy, network expansion and field sales leadership</strong> at Enzolt Energy.
               </p>
+
               <div className="hero-cta">
                 <button className="btn btn-primary magnetic" onClick={handleDownloadResume}>
                   <Icon name="download" size={18} /> Download Resume
@@ -583,7 +551,7 @@ export default function App() {
                   <li><span>Phone</span><strong>+91 97910 67951</strong></li>
                   <li><span>Email</span><strong className="truncate">erpnanda@gmail.com</strong></li>
                   <li><span>LinkedIn</span><strong>nanda-kumar-ababbb81</strong></li>
-                  <li><span>Availability</span><strong className="available">Immediately Available</strong></li>
+                  <li><span>Availability</span><strong className="available">Available in 30 Days</strong></li>
                 </ul>
 
                 <div className="profile-stats">
@@ -604,25 +572,42 @@ export default function App() {
         {/* ABOUT */}
         <section id="about" className="section about">
           <div className="section-inner">
-            <p className="eyebrow reveal fade-up">About</p>
-            <h2 className="section-title reveal fade-up">Driving Revenue Through Relationships</h2>
-            <p className="section-lead reveal fade-up">
-              What started as a technical role installing photo-lab equipment in 2004 grew, over two
-              decades, into a career built on one idea: revenue follows relationships. Thirteen-plus
-              years inside Fujifilm India taught the discipline of channel management at scale — dealer
-              onboarding, territory planning, SAP-driven forecasting — while an independent venture in
-              imaging solutions (2022–2026) sharpened business ownership and P&amp;L accountability. That
-              foundation now powers a deliberate second act: leading channel sales for Enzolt Energy in
-              India's fast-growing energy and EV market.
-            </p>
+            <div className="about-grid">
+              <div className="about-text reveal fade-right">
+                <p className="eyebrow">About</p>
+                <h2 className="section-title">Driving Revenue Through Relationships</h2>
+                <p className="section-lead">
+                  What started as a technical role installing photo-lab equipment in 2004 grew, over two
+                  decades, into a career built on one idea: revenue follows relationships. Thirteen-plus
+                  years inside Fujifilm India taught the discipline of channel management at scale — dealer
+                  onboarding, territory planning, SAP-driven forecasting — while an independent venture in
+                  imaging solutions (2022–2026) sharpened business ownership and P&amp;L accountability. That
+                  foundation now powers a deliberate second act: leading channel sales for Enzolt Energy in
+                  India's fast-growing energy and EV market. Click any item below to view Career Highlights.
+                </p>
+              </div>
+
+              <div className="about-image-wrap reveal fade-left">
+                <div className="about-image-card glass">
+                  <img src={profileImg} alt="R. Nanda Kumar Profile" className="about-img" />
+                </div>
+              </div>
+            </div>
 
             <div className="timeline">
               {TIMELINE.map((t, i) => (
-                <div className={`timeline-item reveal ${i % 2 === 0 ? 'fade-right' : 'fade-left'}`} key={t.year}>
+                <div className={`timeline-item reveal ${i % 2 === 0 ? 'fade-right' : 'fade-left'}`} key={t.year + t.role}>
                   <div className="timeline-marker">
                     <span className={`timeline-dot ${t.current ? 'current' : ''}`} />
                   </div>
-                  <div className="timeline-content glass">
+                  <div
+                    className="timeline-content glass clickable"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => scrollTo('career')}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollTo('career'); } }}
+                    title="Go to Career Highlights"
+                  >
                     <span className="timeline-year">{t.year}</span>
                     <h3>{t.role}</h3>
                     <p className="timeline-company">{t.company}</p>
@@ -645,11 +630,21 @@ export default function App() {
 
             <div className="industries-grid">
               {INDUSTRIES.map((ind) => (
-                <div className="industry-card glass reveal fade-up" key={ind.slug}>
+                <div
+                  className="industry-card glass clickable reveal fade-up"
+                  key={ind.slug}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => scrollTo('career')}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollTo('career'); } }}
+                >
                   <span className="industry-icon"><Icon name={ind.icon} size={22} /></span>
                   <span className="industry-years">{ind.years}</span>
                   <h3>{ind.title}</h3>
                   <p>{ind.note}</p>
+                  <span className="career-card-hint">
+                    Go to Career Highlights <Icon name="arrow" size={14} />
+                  </span>
                 </div>
               ))}
             </div>
@@ -661,19 +656,11 @@ export default function App() {
           <div className="section-inner">
             <p className="eyebrow reveal fade-up">Career</p>
             <h2 className="section-title reveal fade-up">Career Highlights</h2>
-            <p className="section-lead reveal fade-up">Two decades of channel leadership across two industries, one operating philosophy. Tap a role for the full story.</p>
+            <p className="section-lead reveal fade-up">Two decades of channel leadership and technical expertise across two industries, one operating philosophy.</p>
 
             <div className="career-grid">
               {CAREER.map((c) => (
-                <article
-                  className="career-card glass tilt clickable reveal fade-up"
-                  key={c.slug}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => openCareer(c.slug)}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCareer(c.slug); } }}
-                  aria-label={`View details for ${c.role} at ${c.company}`}
-                >
+                <article className="career-card glass tilt reveal fade-up" key={c.slug}>
                   <div className="career-card-head">
                     <div className="company-logo">{c.initials}</div>
                     <div>
@@ -692,7 +679,6 @@ export default function App() {
                   <div className="career-tags">
                     {c.tech.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
-                  <span className="career-card-hint">View full role <Icon name="arrow" size={14} /></span>
                 </article>
               ))}
             </div>
@@ -722,7 +708,12 @@ export default function App() {
             <h2 className="section-title reveal fade-up">Where I Create Value</h2>
             <div className="expertise-grid">
               {EXPERTISE.map((e, i) => (
-                <div className="expertise-chip glass reveal fade-up" style={{ transitionDelay: `${(i % 6) * 40}ms` }} key={e}>
+                <div
+                  className="expertise-chip glass clickable reveal fade-up"
+                  style={{ transitionDelay: `${(i % 6) * 40}ms` }}
+                  key={e}
+                  onClick={() => scrollTo('career')}
+                >
                   {e}
                 </div>
               ))}
@@ -737,7 +728,11 @@ export default function App() {
             <h2 className="section-title reveal fade-up">Capability Breakdown</h2>
             <div className="skills-grid">
               {SKILL_GROUPS.map((g) => (
-                <div className="skill-card glass reveal fade-up" key={g.title}>
+                <div
+                  className="skill-card glass clickable reveal fade-up"
+                  key={g.title}
+                  onClick={() => scrollTo('career')}
+                >
                   <div className="skill-card-head">
                     <span className="skill-icon"><Icon name={g.icon} size={20} /></span>
                     <h3>{g.title}</h3>
@@ -856,39 +851,6 @@ export default function App() {
           <p className="footer-copy">© {new Date().getFullYear()} R. Nanda Kumar. All rights reserved.</p>
         </div>
       </footer>
-
-      {/* CAREER DETAIL — opens via a #career-<slug> hash, so Back/Forward
-          and the Esc key close it the same way a real route would */}
-      {activeCareer && (
-        <div className="career-detail-overlay" role="dialog" aria-modal="true" aria-label={`${activeCareer.role} at ${activeCareer.company}`}>
-          <div className="career-detail-backdrop" onClick={closeCareer} />
-          <div className="career-detail-modal glass">
-            <button className="career-detail-close" onClick={closeCareer} aria-label="Close">
-              <Icon name="close" size={20} />
-            </button>
-            <div className="career-detail-head">
-              <div className="company-logo career-detail-logo">{activeCareer.initials}</div>
-              <div>
-                <h3>{activeCareer.role}</h3>
-                <p className="career-company">{activeCareer.company}</p>
-              </div>
-            </div>
-            <div className="career-meta career-detail-meta">
-              <span>{activeCareer.years}</span>
-              <span>{activeCareer.location}</span>
-            </div>
-            <p className="career-detail-summary">{activeCareer.summary}</p>
-            <h4 className="career-detail-subhead">Key Achievements</h4>
-            <ul className="career-achievements career-detail-achievements">
-              {activeCareer.achievements.map((a) => <li key={a}>{a}</li>)}
-            </ul>
-            <h4 className="career-detail-subhead">Focus Areas</h4>
-            <div className="career-tags">
-              {activeCareer.tech.map((t) => <span key={t} className="tag">{t}</span>)}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

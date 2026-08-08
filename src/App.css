@@ -579,6 +579,53 @@ html[data-theme='black-gold'] {
 }
 
 /* ============================================================
+   ABOUT
+   ============================================================ */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.about-text .section-lead {
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
+.about-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image-card {
+  position: relative;
+  padding: 12px;
+  border-radius: 28px;
+  overflow: hidden;
+  max-width: 380px;
+  width: 100%;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.about-image-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px var(--shadow-color);
+}
+
+.about-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+
+/* ============================================================
    TIMELINE
    ============================================================ */
 
@@ -627,8 +674,9 @@ html[data-theme='black-gold'] {
 
 .industries-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 1000px;
 }
 
 .industry-card {
@@ -1132,25 +1180,18 @@ a:focus-visible {
 
 /* ============================================================
    RESPONSIVE
-   Breakpoints: 1440 (wide desktop) / 1280 (desktop) / 1150 (nav squeeze)
-   1024 (laptop / tablet landscape) / 900 (tablet portrait, nav collapse)
-   768 (small tablet) / 640 (large phone) / 480 (phone) / 380 (small phone)
-   plus a short-landscape-height rule for phones in landscape.
    ============================================================ */
 
-/* ---- Wide desktop: cap runaway line-lengths, nothing else changes ---- */
 @media (min-width: 1441px) {
   .section-inner { max-width: 1280px; }
   .hero-inner { max-width: 1280px; }
 }
 
-/* ---- Laptop: tighten hero gap slightly ---- */
 @media (max-width: 1280px) {
   .hero-inner { gap: 48px; }
   .bento { grid-auto-rows: 180px; }
 }
 
-/* ---- Nav squeeze zone: shrink links before hiding them ---- */
 @media (max-width: 1150px) {
   .nav-links { gap: 0; }
   .nav-link { padding: 9px 11px; font-size: 13.5px; }
@@ -1161,8 +1202,10 @@ a:focus-visible {
   .hero-inner { grid-template-columns: 1fr; gap: 48px; }
   .hero-right { max-width: 480px; margin: 0 auto; width: 100%; }
   .hero-left { text-align: left; }
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .about-image-card { max-width: 340px; margin: 0 auto; }
   .career-grid { grid-template-columns: 1fr; }
-  .industries-grid { grid-template-columns: 1fr 1fr; }
+  .industries-grid { grid-template-columns: 1fr; max-width: 100%; }
   .skills-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
   .metrics-grid { grid-template-columns: repeat(3, 1fr); }
   .diff-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1173,7 +1216,6 @@ a:focus-visible {
   .hiring-col { padding: 24px; }
 }
 
-/* ---- Tablet portrait / nav collapse point ---- */
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
@@ -1204,7 +1246,6 @@ a:focus-visible {
   .theme-menu { right: -8px; }
 }
 
-/* ---- Small tablet ---- */
 @media (max-width: 768px) {
   .section { padding: 96px 0; }
   .hero-heading { font-size: clamp(2.4rem, 8vw, 3.2rem); }
@@ -1221,7 +1262,6 @@ a:focus-visible {
   .career-card-head { flex-wrap: wrap; }
 }
 
-/* ---- Large phone / small tablet crossover ---- */
 @media (max-width: 640px) {
   .section { padding: 76px 0; }
   .section-inner { padding: 0 20px; }
@@ -1257,7 +1297,6 @@ a:focus-visible {
   .theme-menu { left: 50%; right: auto; transform: translateX(-50%); min-width: 200px; }
 }
 
-/* ---- Phone ---- */
 @media (max-width: 480px) {
   .navbar-inner { padding: 14px 16px; }
   .brand-mark { width: 38px; height: 38px; font-size: 13px; border-radius: 12px; }
@@ -1292,7 +1331,6 @@ a:focus-visible {
   .btn { padding: 14px 22px; font-size: 14px; }
 }
 
-/* ---- Small phone (e.g. iPhone SE / 360px devices) ---- */
 @media (max-width: 380px) {
   .badge { font-size: 11px; padding: 7px 12px; }
   .hero-heading { font-size: clamp(1.9rem, 11vw, 2.3rem); }
@@ -1304,7 +1342,6 @@ a:focus-visible {
   .brand-name { font-size: 12.5px; }
 }
 
-/* ---- Short-height landscape phones: hero shouldn't force a huge scroll ---- */
 @media (max-height: 480px) and (orientation: landscape) {
   .hero { min-height: auto; padding: 120px 0 48px; }
   .scroll-indicator { display: none; }
@@ -1312,7 +1349,6 @@ a:focus-visible {
   .career-detail-modal { max-height: 92vh; }
 }
 
-/* ---- Tablet landscape fine-tune (iPad 1024x768 style) ---- */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
   .hero { min-height: 78vh; }
   .hero-inner { grid-template-columns: 1.1fr 0.9fr; }
