@@ -24,6 +24,7 @@ const NAV_LINKS = [
   { id: 'about', label: 'About' },
   { id: 'industries', label: 'Industries' },
   { id: 'career', label: 'Career' },
+  { id: 'education', label: 'Education' },
   { id: 'skills', label: 'Skills' },
   { id: 'achievements', label: 'Achievements' },
   { id: 'contact', label: 'Contact' },
@@ -158,6 +159,24 @@ const CAREER = [
   },
 ];
 
+const EDUCATION = [
+  {
+    degree: 'Master of Business Administration (MBA)',
+    institution: 'University of Madras',
+    year: '2009',
+  },
+  {
+    degree: 'Bachelor of Computer Application (BCA)',
+    institution: 'University of Madras',
+    year: '2006',
+  },
+  {
+    degree: 'Diploma in Information Technology (DIT)',
+    institution: 'Meenakshi Krishnan Polytechnic, Chennai',
+    year: '2004',
+  },
+];
+
 const METRICS = [
   { value: 19, suffix: '+', label: 'Years Experience' },
   { value: 100, suffix: '+%', label: 'Target Achievement' },
@@ -251,6 +270,7 @@ const Icon = ({ name, size = 20 }) => {
     case 'chip': return <svg {...p}><rect x="6" y="6" width="12" height="12" rx="1" /><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2" /></svg>;
     case 'printer': return <svg {...p}><path d="M6 9V2h12v7" /><rect x="4" y="9" width="16" height="8" rx="1" /><path d="M6 17h12v5H6z" /></svg>;
     case 'energy': return <svg {...p}><path d="M13 2 4 14h6l-1 8 9-12h-6z" /></svg>;
+    case 'education': return <svg {...p}><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5" /></svg>;
     case 'menu': return <svg {...p}><path d="M3 12h18M3 6h18M3 18h18" /></svg>;
     case 'close': return <svg {...p}><path d="M18 6 6 18M6 6l12 12" /></svg>;
     case 'download': return <svg {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 10l5 5 5-5M12 15V3" /></svg>;
@@ -680,6 +700,30 @@ export default function App() {
                     {c.tech.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
                 </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* EDUCATION & QUALIFICATIONS */}
+        <section id="education" className="section education">
+          <div className="section-inner">
+            <p className="eyebrow reveal fade-up">Education</p>
+            <h2 className="section-title reveal fade-up">Education &amp; Qualifications</h2>
+            <p className="section-lead reveal fade-up">Strong academic foundation bridging technical skills, computer applications, and business administration.</p>
+
+            <div className="education-grid">
+              {EDUCATION.map((edu, idx) => (
+                <div className="education-card glass reveal fade-up" key={edu.degree} style={{ transitionDelay: `${idx * 80}ms` }}>
+                  <div className="education-icon">
+                    <Icon name="education" size={24} />
+                  </div>
+                  <div className="education-content">
+                    <span className="education-year">{edu.year}</span>
+                    <h3>{edu.degree}</h3>
+                    <p className="education-institution">{edu.institution}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
